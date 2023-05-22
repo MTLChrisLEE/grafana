@@ -347,6 +347,12 @@ func getExistingDashboardByIDOrUIDForUpdate(sess *db.Session, dash *dashboards.D
 		return false, nil
 	}
 
+	//When a user is creating a new dashboard, Created == Updated
+	if dash.Created.Local().Equal(dash.Updated) && dashWithUidExists {
+		return false, dashboards.ErrDashboardWithSameUIDExists
+	}
+
+	//When id(w/wo uid) is provided to update a dashboard & the ids of fetched dashboards are different
 	if dashWithIdExists && dashWithUidExists && existingById.ID != existingByUid.ID {
 		return false, dashboards.ErrDashboardWithSameUIDExists
 	}

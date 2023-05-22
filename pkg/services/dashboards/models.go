@@ -66,8 +66,9 @@ func NewDashboard(title string) *Dashboard {
 	dash.Data = simplejson.New()
 	dash.Data.Set("title", title)
 	dash.Title = title
-	dash.Created = time.Now()
-	dash.Updated = time.Now()
+	createdTime := time.Now()
+	dash.Created = createdTime
+	dash.Updated = createdTime
 	dash.UpdateSlug()
 	return dash
 }
